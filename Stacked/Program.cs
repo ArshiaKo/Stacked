@@ -13,12 +13,25 @@ namespace Stacked
      /// </summary>
         static void Main(string[] args)
         {
+            
             StackedLinkedList<int> StackedLinkedList = new StackedLinkedList<int>();
-            StackedLinkedList.Push(2);
-            foreach (StackedNode<int> node in StackedLinkedList.Print())
+
+            for (int i = 1; i <= 5; i++)
             {
-                Console.WriteLine(node.Data);
+                StackedLinkedList.Push(i);
+                Console.WriteLine(i);
             }
+            Console.WriteLine();
+            
+            
+            for (int i = 0; i < 5; i++)
+            {
+                var POP = StackedLinkedList.Pop();
+                Console.WriteLine(POP);                
+            }
+                
+                   
+            
             Console.ReadKey();
         }
     }

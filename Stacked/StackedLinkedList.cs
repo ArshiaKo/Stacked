@@ -8,29 +8,37 @@ namespace Stacked
 {
     class StackedLinkedList<T> where T : IComparable<T>
     {
-        public StackedNode<T> Head;
+        public StackedNode<T> Head = null;
         public StackedLinkedList()
         {
             Head = null;
         }
+        #region Peek
+
+        public T Peek()
+        {
+            StackedNode<T> traversalNode = Head;
+            while (traversalNode.NextNode != null)
+            {
+                traversalNode = traversalNode.NextNode;
+            }
+            return traversalNode.Data;
+        }
+
+        #endregion
         #region Push
         public void Push(T Value)
         {
+            StackedNode<T> NewNode = new StackedNode<T>(Value);
+            StackedNode<T> traversalNode = Head;
             if (Head == null)
             {
                 Head = new StackedNode<T>(Value);
             }
             else
             {
-                StackedNode<T> traversalNode = Head;
-                while (traversalNode.NextNode != null)
-                {
-                    traversalNode = traversalNode.NextNode;
-                }
-                if (traversalNode.NextNode == null)
-                {
-                    traversalNode.NextNode = new StackedNode<T>(Value);
-                }
+                NewNode.NextNode = Head;
+                Head = NewNode;
             }
         }
         #endregion
@@ -45,15 +53,16 @@ namespace Stacked
             }
         }
         #endregion
-        #region Remove
-        public StackedNode<T> Pop()
+        #region Pop
+        public T Pop()
         {
-            StackedNode<T> traversalNode = Head;
-            while (traversalNode.NextNode.NextNode != null)
+            if (Head == null)
             {
-                //////////////FIX THIS/////////////
-                traversalNode = traversalNode.NextNode;
+                throw new InvalidOperationException("Cannot pop an empty stack");
             }
+            StackedNode<T> temp = Head;
+            Head = Head.NextNode;
+            return temp.Data;
         }
         #endregion
     }
